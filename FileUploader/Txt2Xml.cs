@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 
@@ -47,22 +48,36 @@ namespace FileUploader
         public void encabezado()
         {
             finalizado = false;
-            sr = new System.IO.StreamReader(origen);
-            sw = new System.IO.StreamWriter(destino);
+            
             try
             {
+                if (File.Exists(destino))
+                {
+                    File.Delete(destino);
+                }
+                sr = new System.IO.StreamReader(origen);
+                sw = new System.IO.StreamWriter(destino);
                 sw.WriteLine("<? xml version = \"1.0\" encoding = \"UTF-8\" ?>");
                 sw.WriteLine("<ROOT>");
             }
             catch(Exception)
-
+            {
+                sw.Close();
+                sr.Close();
+            }
         }
         public void cerrar()
         {
             finalizado = true;
-            sr.Close();
-            sw.WriteLine(@"<\ROOT>");
-            sw.Close();
+            try
+            {
+                sr.Close();
+                sw.WriteLine(@"<\ROOT>");
+                sw.Close();
+            }catch (Exception)
+            {
+
+            }
         }
 
         public bool translateTupla()
@@ -70,7 +85,14 @@ namespace FileUploader
             if (!actualizar)
             {
                 char[] Sbuffer = new char[120];
-                sr.ReadBlock(Sbuffer, 0, Sbuffer.Length);
+                try
+                {
+                    sr.ReadBlock(Sbuffer, 0, Sbuffer.Length);
+                }catch(Exception)
+                {
+                    sr.Close();
+                    return false;
+                }
                 string s = new string(Sbuffer);
                 line = Regex.Replace(s, @"\n", "");
             }
@@ -86,20 +108,23 @@ namespace FileUploader
             }
             else
             {
-                Trace.WriteLine("entran else");
-                sw.WriteLine(" <VOTANTE>");
-                Trace.WriteLine("primer llave");
-                alistar(linea);
-                Trace.WriteLine("lineas listas");
-                for (int i = 0; i < 8; i++)
+                try
                 {
-                    Trace.WriteLine("ele prosesado");
-                    sw.WriteLine(linea[i]);
+                    sw.WriteLine(" <VOTANTE>");
+                    alistar(linea);
+                    for (int i = 0; i < 8; i++)
+                    {
+                        sw.WriteLine(linea[i]);
+                    }
+                    sw.WriteLine(@" <\VOTANTE>");
+                    return true;
                 }
-                Trace.WriteLine("todo prosesado");
-                sw.WriteLine(@" <\VOTANTE>");
-                Trace.WriteLine("cerrar llave");
-                return true;
+                catch (Exception)
+                {
+                    sw.Close();
+                    return false;
+                }
+
             }
         }
 
@@ -116,8 +141,7 @@ namespace FileUploader
 
         public void saltar()
         {
-            char[] Sbuffer = new char[120];
-            sr.ReadBlock(Sbuffer, 0, Sbuffer.Length);
+            actualizar = false;
         }
 
         private bool verificar(string[] elementos)

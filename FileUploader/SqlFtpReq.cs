@@ -14,7 +14,7 @@ namespace FileUploader
         public SqlFtpReq()
         {
             mssql = "Data Source=ServerName;" + "Initial Catalog=DataBaseName;" + "User id=;" + "Password=;";
-            mysql = "Server = myServerAddress; Database = myDataBase; Uid = myUsername; Pwd = myPassword;";
+            mysql = "Server = 35.238.137.16; Database = bases2p1; Uid = sa; Pwd = bases123*;";
 
         }
         public void sendFtpMSDownload(string ulr)
@@ -61,7 +61,10 @@ namespace FileUploader
                     try
                     {
                         Connection.Open();
-                        return true;
+                        if (Connection.State == ConnectionState.Open)
+                            return true;
+                        else
+                            return false;
                     }
                     catch (SqlException)
                     {
@@ -76,7 +79,10 @@ namespace FileUploader
                     try
                     {
                         conn.Open();
-                        return true;
+                        if (conn.State.ToString() == "Open")
+                                return true;
+                        else
+                            return false;
                     }
                     catch (MySql.Data.MySqlClient.MySqlException ex)
                     {

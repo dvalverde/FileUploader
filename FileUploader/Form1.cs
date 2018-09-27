@@ -94,6 +94,8 @@ namespace FileUploader
         {
             EstadoCorL.Text = "Corrigiendo";
             Traductor.cambiar(ErrorTB.Text);
+            ErrorTB.Text = "";
+            ElementoL.Text = "";
             CorregirBTN.Enabled = false;
             EliminarBTN.Enabled = false;
             traduccion();
@@ -102,6 +104,8 @@ namespace FileUploader
         private void EliminarBTN_Click(object sender, EventArgs e)
         {
             EstadoCorL.Text = "Tupla Ignorada";
+            ErrorTB.Text = "";
+            ElementoL.Text = "";
             CorregirBTN.Enabled = false;
             EliminarBTN.Enabled = false;
             Traductor.saltar();

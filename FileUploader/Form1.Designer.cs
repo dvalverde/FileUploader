@@ -37,7 +37,7 @@
             this.LabelEstado = new System.Windows.Forms.Label();
             this.CargarBTN = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.ConexionPanel = new System.Windows.Forms.GroupBox();
+            this.Envio = new System.Windows.Forms.GroupBox();
             this.EnviarBTN = new System.Windows.Forms.Button();
             this.SeleccionTB = new System.Windows.Forms.TextBox();
             this.SeleccionarBTN = new System.Windows.Forms.Button();
@@ -62,7 +62,7 @@
             this.OPENFTP = new System.Windows.Forms.OpenFileDialog();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.ConexionPanel.SuspendLayout();
+            this.Envio.SuspendLayout();
             this.ArchivoPanel.SuspendLayout();
             this.TaduccionPanel.SuspendLayout();
             this.SuspendLayout();
@@ -73,7 +73,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 46.46983F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 53.53017F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.ConexionPanel, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.Envio, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.ArchivoPanel, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.TaduccionPanel, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -166,17 +166,17 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Servidor";
             // 
-            // ConexionPanel
+            // Envio
             // 
-            this.ConexionPanel.Controls.Add(this.EnviarBTN);
-            this.ConexionPanel.Controls.Add(this.SeleccionTB);
-            this.ConexionPanel.Controls.Add(this.SeleccionarBTN);
-            this.ConexionPanel.Location = new System.Drawing.Point(213, 3);
-            this.ConexionPanel.Name = "ConexionPanel";
-            this.ConexionPanel.Size = new System.Drawing.Size(236, 219);
-            this.ConexionPanel.TabIndex = 1;
-            this.ConexionPanel.TabStop = false;
-            this.ConexionPanel.Text = "Conexion";
+            this.Envio.Controls.Add(this.EnviarBTN);
+            this.Envio.Controls.Add(this.SeleccionTB);
+            this.Envio.Controls.Add(this.SeleccionarBTN);
+            this.Envio.Location = new System.Drawing.Point(213, 3);
+            this.Envio.Name = "Envio";
+            this.Envio.Size = new System.Drawing.Size(236, 219);
+            this.Envio.TabIndex = 1;
+            this.Envio.TabStop = false;
+            this.Envio.Text = "Envio";
             // 
             // EnviarBTN
             // 
@@ -320,9 +320,8 @@
             this.ElementoL.AutoSize = true;
             this.ElementoL.Location = new System.Drawing.Point(103, 46);
             this.ElementoL.Name = "ElementoL";
-            this.ElementoL.Size = new System.Drawing.Size(13, 13);
+            this.ElementoL.Size = new System.Drawing.Size(0, 13);
             this.ElementoL.TabIndex = 5;
-            this.ElementoL.Text = "0";
             // 
             // label4
             // 
@@ -395,8 +394,8 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.ConexionPanel.ResumeLayout(false);
-            this.ConexionPanel.PerformLayout();
+            this.Envio.ResumeLayout(false);
+            this.Envio.PerformLayout();
             this.ArchivoPanel.ResumeLayout(false);
             this.ArchivoPanel.PerformLayout();
             this.TaduccionPanel.ResumeLayout(false);
@@ -408,7 +407,7 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.GroupBox ConexionPanel;
+        private System.Windows.Forms.GroupBox Envio;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox ArchivoPanel;
         private System.Windows.Forms.Button DestinoBTN;
