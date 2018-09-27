@@ -49,8 +49,13 @@ namespace FileUploader
             finalizado = false;
             sr = new System.IO.StreamReader(origen);
             sw = new System.IO.StreamWriter(destino);
-            sw.WriteLine("<? xml version = \"1.0\" encoding = \"UTF-8\" ?>");
-            sw.WriteLine("<ROOT>");
+            try
+            {
+                sw.WriteLine("<? xml version = \"1.0\" encoding = \"UTF-8\" ?>");
+                sw.WriteLine("<ROOT>");
+            }
+            catch(Exception)
+
         }
         public void cerrar()
         {
