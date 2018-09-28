@@ -13,8 +13,8 @@ namespace FileUploader
         string mssql;
         public SqlFtpReq()
         {
-            mssql = "Data Source=35.238.137.16;" + "Initial Catalog=bases2p1;" + "User id=sa;" + "Password=bases123*;";
-            mysql = "Server = 35.238.137.16; Database = bases2p1; Uid = sa; Pwd = bases123*;";
+            mssql = "Data Source=35.238.137.162;" + "Initial Catalog=bases2p1;" + "User id=sa;" + "Password=bases123*;";
+            mysql = "Server = 35.225.47.96; Database = bases2p1; Uid = root; Pwd = bases123*;";
 
         }
         public void sendFtpMSDownload(string ulr)
