@@ -13,7 +13,7 @@ namespace FileUploader
         string mssql;
         public SqlFtpReq()
         {
-            mssql = "Data Source=ServerName;" + "Initial Catalog=DataBaseName;" + "User id=;" + "Password=;";
+            mssql = "Data Source=35.238.137.16;" + "Initial Catalog=bases2p1;" + "User id=sa;" + "Password=bases123*;";
             mysql = "Server = 35.238.137.16; Database = bases2p1; Uid = sa; Pwd = bases123*;";
 
         }
@@ -84,7 +84,7 @@ namespace FileUploader
                         else
                             return false;
                     }
-                    catch (MySql.Data.MySqlClient.MySqlException ex)
+                    catch (MySql.Data.MySqlClient.MySqlException)
                     {
                         return false;
                     }
