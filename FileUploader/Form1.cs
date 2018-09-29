@@ -32,7 +32,7 @@ namespace FileUploader
             serverInd = 0;
             Consultor= new SqlFtpReq();
             Traductor = new Txt2Xml();
-            FTPUploader = new webFTP("FtpPassword", "FtpUser");
+            FTPUploader = new webFTP("61|Itt<^UwI$M+E", "bases2p1");
         }
 
         private void traduccion() {
@@ -152,6 +152,7 @@ namespace FileUploader
         {
             string Mensage=FTPUploader.send();
             MessageBox.Show(Mensage);
+            UlrTB.Text = FTPUploader.ulrname;
         }
 
         private void CargarBTN_Click(object sender, EventArgs e)
@@ -160,6 +161,10 @@ namespace FileUploader
                 Consultor.sendFtpMSDownload(UlrTB.Text);
             else
                 Consultor.sendFtpMyDownload(UlrTB.Text);
+            if (Consultor.Errores)
+                MessageBox.Show("Ocurrieron Excepciones durante la carga","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            else
+                MessageBox.Show("Se insertaron "+ Consultor.inserciones+" filas");
         }
 
         private void OrigenTB_TextChanged(object sender, EventArgs e)
@@ -199,13 +204,24 @@ namespace FileUploader
         private void UlrTB_TextChanged(object sender, EventArgs e)
         {
             if (UlrTB.Text != "")
+            {
                 selUlr = true;
+                FTPUploader.ulrname = UlrTB.Text;
+                BorrarBTN.Enabled = true;
+            }
             else
+            {
                 selUlr = false;
+                BorrarBTN.Enabled = false;
+            }
             if (selServ && selUlr)
+            {
                 CargarBTN.Enabled = true;
+            }
             else
+            {
                 CargarBTN.Enabled = false;
+            }
         }
 
         private void listBoxServer_SelectedIndexChanged(object sender, EventArgs e)
@@ -225,6 +241,12 @@ namespace FileUploader
                 CargarBTN.Enabled = true;
             else
                 CargarBTN.Enabled = false;
+        }
+
+        private void BorrarBTN_Click(object sender, EventArgs e)
+        {
+            string Mensage = FTPUploader.DeleteFile();
+            MessageBox.Show(Mensage);
         }
     }
 }

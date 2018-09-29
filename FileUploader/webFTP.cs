@@ -8,10 +8,10 @@ namespace FileUploader
 {
     public class webFTP
     {
-        string ftpPassword;
-        string ftpUser;
-        string filename;
-        string ulrname; //"ftp://ftp.example.com/remote/path/file.zip"
+        private string ftpPassword;
+        private string ftpUser;
+        public string filename;
+        public string ulrname; //"ftp://ftp.example.com/remote/path/file.zip"
 
         public webFTP(string FtpPassword, string FtpUser)
         {
@@ -39,30 +39,23 @@ namespace FileUploader
 
         public void setFile(string filepath, string namefile)
         {
-            string ulr = "";
+            string ulr = "ftp://35.238.137.162/";
             filename = filepath;
-            ulrname = ulr + namefile;
+            ulrname = ulr + namefile+".xml";
         }
 
-        public bool DeleteFileOnServer(Uri serverUri)
+        public string DeleteFile()
         {
-            // The serverUri parameter should use the ftp:// scheme.
-            // It contains the name of the server file that is to be deleted.
-            // Example: ftp://contoso.com/someFile.txt.
-            // 
-
-            if (serverUri.Scheme != Uri.UriSchemeFtp)
-            {
-                return false;
-            }
-            // Get the object used to communicate with the server.
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
+            string resp = "";
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ulrname);
+            request.Credentials = new NetworkCredential(ftpUser, ftpPassword);
             request.Method = WebRequestMethods.Ftp.DeleteFile;
 
-            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
-            //Console.WriteLine("Delete status: {0}", response.StatusDescription);
-            response.Close();
-            return true;
+            using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
+            {
+                resp = ($"Borrado finalizado, estado: {response.StatusDescription}");
+            }
+            return resp;
         }
     }
 }

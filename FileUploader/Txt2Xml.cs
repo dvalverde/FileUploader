@@ -57,7 +57,7 @@ namespace FileUploader
                 }
                 sr = new System.IO.StreamReader(origen);
                 sw = new System.IO.StreamWriter(destino);
-                sw.WriteLine("<? xml version = \"1.0\" encoding = \"UTF-8\" ?>");
+                //sw.WriteLine("<? xml version = \"1.0\" encoding = \"UTF-16\" ?>");
                 sw.WriteLine("<ROOT>");
             }
             catch(Exception)
@@ -72,7 +72,7 @@ namespace FileUploader
             try
             {
                 sr.Close();
-                sw.WriteLine(@"<\ROOT>");
+                sw.WriteLine(@"</ROOT>");
                 sw.Close();
             }catch (Exception)
             {
@@ -116,7 +116,7 @@ namespace FileUploader
                     {
                         sw.WriteLine(linea[i]);
                     }
-                    sw.WriteLine(@" <\VOTANTE>");
+                    sw.WriteLine(@" </VOTANTE>");
                     return true;
                 }
                 catch (Exception)
@@ -191,28 +191,28 @@ namespace FileUploader
             switch (posicion)
             {
                 case 0:
-                    resp = "  <CEDULA>" + elemento + @"<\CEDULA>";
+                    resp = "  <CEDULA> " + elemento + @" </CEDULA>";
                     break;
                 case 1:
-                    resp = "  <CODELEC>" + elemento + @"<\CODELEC>";
+                    resp = "  <CODELEC> " + elemento + @" </CODELEC>";
                     break;
                 case 2:
-                    resp = "  <SEXO>" + elemento + @"<\SEXO>";
+                    resp = "  <SEXO> " + elemento + @" </SEXO>";
                     break;
                 case 3:
-                    resp = "  <FECHACADUC>" + elemento + @"<\FECHACADUC>";
+                    resp = "  <FECHACADUC> " + elemento + @" </FECHACADUC>";
                     break;
                 case 4:
-                    resp = "  <JUNTA>" + elemento + @"<\JUNTA>";
+                    resp = "  <JUNTA> " + elemento + @" </JUNTA>";
                     break;
                 case 5:
-                    resp = "  <NOMBRE>" + elemento + @"<\NOMBRE>";
+                    resp = "  <NOMBRE> " + elemento + @" </NOMBRE>";
                     break;
                 case 6:
-                    resp = "  <1APELLIDO>" + elemento + @"<\1APELLIDO>";
+                    resp = "  <APELLIDO1> " + elemento + @" </APELLIDO1>";
                     break;
                 case 7:
-                    resp = "  <2APELLIDO>" + elemento + @"<\2APELLIDO>";
+                    resp = "  <APELLIDO2> " + elemento + @" </APELLIDO2>";
                     break;
             }
             return resp;
@@ -223,7 +223,7 @@ namespace FileUploader
         }
         private bool esAlfabetico(string s)
         {
-            return Regex.IsMatch(s, @"^[a-zA-Z\s]+$");
+            return Regex.IsMatch(s, @"^[ñÑa-zA-Z\s]+$");
         }
     }
 }

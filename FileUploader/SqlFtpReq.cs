@@ -9,15 +9,18 @@ namespace FileUploader
 {
     public class SqlFtpReq
     {
-        string mysql;
-        string mssql;
+        private string mysql;
+        private string mssql;
+        public bool Errores;
+        public int inserciones;
         public SqlFtpReq()
         {
             mssql = "Data Source=35.238.137.162;" + "Initial Catalog=bases2p1;" + "User id=sa;" + "Password=bases123*;";
             mysql = "Server = 35.225.47.96; Database = bases2p1; Uid = root; Pwd = bases123*;";
-
+            Errores = false;
+            inserciones = 0;
         }
-        public void sendFtpMSDownload(string ulr)
+        public void sendFtpMSDownload(string file)
         {
             using (SqlConnection cn = new SqlConnection(mssql))
             {
@@ -26,13 +29,29 @@ namespace FileUploader
                 SqlCommand cmd = new SqlCommand("NombreStoreProcedure", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@param", Convert.ToInt32("string"));
+                cmd.Parameters.AddWithValue("@FTPServer" , "ftp://35.238.137.162");
 
-                SqlDataReader dr = cmd.ExecuteReader();
+                cmd.Parameters.AddWithValue("@FTPUser" , "bases2p1");
 
-                if (dr.Read())
+                cmd.Parameters.AddWithValue("@FTPPWD" , "61|Itt<^UwI$M+E");
+
+                cmd.Parameters.AddWithValue("@FTPPath" , "");
+
+                cmd.Parameters.AddWithValue("@FTPFileName" , file);
+
+                cmd.Parameters.AddWithValue("@SourcePath" , "C:\ftp");
+
+                cmd.Parameters.AddWithValue("@SourceFile" , file);
+
+                cmd.Parameters.AddWithValue("@workdir" , @"c:\temp\");
+                try
                 {
-                    //aqui cargas la lista
+                    inserciones = cmd.ExecuteNonQuery();
+                    Errores = false;
+                }
+                catch (Exception)
+                {
+                    Errores = true;
                 }
             }
         }
@@ -48,7 +67,15 @@ namespace FileUploader
                 cmd.Parameters.AddWithValue("@<nombre variable>", "<valor variable>");
                 cmd.Parameters["@<nombre variable>"].Direction = ParameterDirection.Input;
 
-                cmd.ExecuteNonQuery();
+                try
+                {
+                    inserciones = cmd.ExecuteNonQuery();
+                    Errores = false;
+                }
+                catch (Exception)
+                {
+                    Errores = true;
+                }
             }
         }
 

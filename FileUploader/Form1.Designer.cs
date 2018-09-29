@@ -60,6 +60,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.OPENFTP = new System.Windows.Forms.OpenFileDialog();
+            this.BorrarBTN = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.Envio.SuspendLayout();
@@ -87,6 +88,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.BorrarBTN);
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.listBoxServer);
             this.panel1.Controls.Add(this.label5);
@@ -123,7 +125,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(25, 114);
+            this.label5.Location = new System.Drawing.Point(25, 102);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(65, 13);
             this.label5.TabIndex = 10;
@@ -131,7 +133,7 @@
             // 
             // UlrTB
             // 
-            this.UlrTB.Location = new System.Drawing.Point(28, 130);
+            this.UlrTB.Location = new System.Drawing.Point(28, 118);
             this.UlrTB.Name = "UlrTB";
             this.UlrTB.Size = new System.Drawing.Size(179, 20);
             this.UlrTB.TabIndex = 9;
@@ -149,7 +151,7 @@
             // CargarBTN
             // 
             this.CargarBTN.Enabled = false;
-            this.CargarBTN.Location = new System.Drawing.Point(25, 170);
+            this.CargarBTN.Location = new System.Drawing.Point(28, 152);
             this.CargarBTN.Name = "CargarBTN";
             this.CargarBTN.Size = new System.Drawing.Size(182, 23);
             this.CargarBTN.TabIndex = 6;
@@ -382,6 +384,17 @@
             this.OPENFTP.DefaultExt = "xml";
             this.OPENFTP.Filter = "(.xml)|*.xml";
             // 
+            // BorrarBTN
+            // 
+            this.BorrarBTN.Enabled = false;
+            this.BorrarBTN.Location = new System.Drawing.Point(28, 181);
+            this.BorrarBTN.Name = "BorrarBTN";
+            this.BorrarBTN.Size = new System.Drawing.Size(182, 23);
+            this.BorrarBTN.TabIndex = 13;
+            this.BorrarBTN.Text = "Borrar Archivo";
+            this.BorrarBTN.UseVisualStyleBackColor = true;
+            this.BorrarBTN.Click += new System.EventHandler(this.BorrarBTN_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -438,6 +451,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label EstadoCorL;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button BorrarBTN;
     }
 }
 
