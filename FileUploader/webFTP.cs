@@ -2,6 +2,8 @@
 using System.Net;
 using System.IO;
 
+
+/*opcion para mantener solo un archivo en el ftp, el cual puede ser descargado por medio de un batch llamado desde un SP*/
 namespace FileUploader
 {
     public class webFTP
@@ -40,6 +42,27 @@ namespace FileUploader
             string ulr = "";
             filename = filepath;
             ulrname = ulr + namefile;
+        }
+
+        public bool DeleteFileOnServer(Uri serverUri)
+        {
+            // The serverUri parameter should use the ftp:// scheme.
+            // It contains the name of the server file that is to be deleted.
+            // Example: ftp://contoso.com/someFile.txt.
+            // 
+
+            if (serverUri.Scheme != Uri.UriSchemeFtp)
+            {
+                return false;
+            }
+            // Get the object used to communicate with the server.
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(serverUri);
+            request.Method = WebRequestMethods.Ftp.DeleteFile;
+
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+            //Console.WriteLine("Delete status: {0}", response.StatusDescription);
+            response.Close();
+            return true;
         }
     }
 }
