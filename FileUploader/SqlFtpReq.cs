@@ -26,24 +26,11 @@ namespace FileUploader
             {
                 cn.Open();
 
-                SqlCommand cmd = new SqlCommand("NombreStoreProcedure", cn);
+                //SqlCommand cmd = new SqlCommand("USE [bases2p1] GO DECLARE @return_value int EXEC @return_value = [dbo].[insertar] SELECT  'Return Value' = @return_value GO" ,cn);
+                //cmd.CommandType = CommandType.Text;
+                SqlCommand cmd = new SqlCommand("[bases2p1].[dbo].[insertar]", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@FTPServer" , "ftp://35.238.137.162");
-
-                cmd.Parameters.AddWithValue("@FTPUser" , "bases2p1");
-
-                cmd.Parameters.AddWithValue("@FTPPWD" , "61|Itt<^UwI$M+E");
-
-                cmd.Parameters.AddWithValue("@FTPPath" , "");
-
-                cmd.Parameters.AddWithValue("@FTPFileName" , file);
-
-                cmd.Parameters.AddWithValue("@SourcePath" , "C:\ftp");
-
-                cmd.Parameters.AddWithValue("@SourceFile" , file);
-
-                cmd.Parameters.AddWithValue("@workdir" , @"c:\temp\");
                 try
                 {
                     inserciones = cmd.ExecuteNonQuery();
@@ -61,11 +48,8 @@ namespace FileUploader
             {    //watch out for this SQL injection vulnerability below
                 MySqlCommand cmd = conn.CreateCommand();
                 conn.Open();
-                cmd.CommandText = "NombreStoreProcedure";
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@<nombre variable>", "<valor variable>");
-                cmd.Parameters["@<nombre variable>"].Direction = ParameterDirection.Input;
+                cmd.CommandText = "DELETE from personas; LOAD XML LOCAL INFILE \"http://35.238.137.162/datos.xml\" INTO TABLE personas ROWS IDENTIFIED BY '<VOTANTE>'; ";
+                cmd.CommandType = CommandType.Text;
 
                 try
                 {

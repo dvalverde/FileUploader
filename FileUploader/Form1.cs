@@ -23,7 +23,6 @@ namespace FileUploader
         private bool selServ;
         private bool selUlr;
         private int serverInd;
-        private int partes;
         public Form1()
         {
             InitializeComponent();
@@ -68,10 +67,10 @@ namespace FileUploader
                         resp = "NOMBRE";
                         break;
                     case 6:
-                        resp = "1APELLIDO";
+                        resp = "APELLIDOUNO";
                         break;
                     case 7:
-                        resp = "2APELLIDO";
+                        resp = "APELLIDODOS";
                         break;
                 }
                 EliminarBTN.Enabled = true;
@@ -89,7 +88,6 @@ namespace FileUploader
         private void TraducirBTN_Click(object sender, EventArgs e)
         {
             TraducirBTN.Enabled = false;
-            Traductor.filepart=0;
             Traductor.LimpiarFiles();
             Traductor.encabezado();
             traduccion();
@@ -153,22 +151,15 @@ namespace FileUploader
                 SeleccionTB.Text = OPENFTP.FileName;
             }
         }
+
         private void EnviarBTN_Click(object sender, EventArgs e)
         {
             string file = SeleccionTB.Text;
-            FTPUploader.setFile(file, Path.GetFileNameWithoutExtension(file));
-            string ulrOrig= FTPUploader.ulrname;
-            string actual = file;
-            string Mensage;
-            int arcact = 0;
-            while (File.Exists(actual))
-            {
-                actual = Path.GetFileNameWithoutExtension(file) + arcact.ToString("000") + ".xml";
-                FTPUploader.setFile(actual, Path.GetFileNameWithoutExtension(actual));
-                Mensage = FTPUploader.send();
-                MessageBox.Show(Mensage);
-                arcact++;
-            }
+            FTPUploader.setFile(file);
+            string ulrOrig = FTPUploader.ulrname;
+            string Mensage= FTPUploader.send();
+            //string Mensage = FTPUploader.DeleteFile("ftp://35.238.137.162/datos%20-%20Copy.xml");
+            MessageBox.Show(Mensage);
             UlrTB.Text = ulrOrig;
         }
 
@@ -227,7 +218,6 @@ namespace FileUploader
         private void SeleccionTB_TextChanged(object sender, EventArgs e)
         {
             EnviarBTN.Enabled = true;
-            partes=Traductor.DataArch(SeleccionTB.Text);
         }
 
 
@@ -237,12 +227,10 @@ namespace FileUploader
             {
                 selUlr = true;
                 FTPUploader.ulrname = UlrTB.Text;
-                BorrarBTN.Enabled = true;
             }
             else
             {
                 selUlr = false;
-                BorrarBTN.Enabled = false;
             }
             if (selServ && selUlr)
             {
@@ -273,17 +261,17 @@ namespace FileUploader
                 CargarBTN.Enabled = false;
         }
 
-        private void BorrarBTN_Click(object sender, EventArgs e)
-        {
-            string file = SeleccionTB.Text;
-            FTPUploader.setFile(file, Path.GetFileNameWithoutExtension(file));
-            string Mensage = FTPUploader.DeleteFile();
-            MessageBox.Show(Mensage);
-        }
-
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             saltar = checkBox1.Checked;
+        }
+
+        private void BorrarBTN_Click(object sender, EventArgs e)
+        {
+            string file = UlrTB.Text;
+            string Mensage = FTPUploader.DeleteFile(file);
+            MessageBox.Show(Mensage);
+            UlrTB.Text = "";
         }
     }
 }

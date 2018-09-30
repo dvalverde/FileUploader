@@ -9,7 +9,6 @@ namespace FileUploader
     {
         public string origen; //for paths use @" <path> "
         public string destino;
-        private string dest_name;
         public int pos_error;
         public bool finalizado;
         private System.IO.StreamReader sr;
@@ -17,7 +16,6 @@ namespace FileUploader
         private bool actualizar;
         public string correccion;
         string line;
-        public int filepart;
 
 
         public Txt2Xml(string archivoOrigen, string archivoDestino)
@@ -26,17 +24,14 @@ namespace FileUploader
             destino = archivoDestino;
             finalizado = true;
             pos_error = 0;
-            filepart = 0;
         }
 
         public Txt2Xml()
         {
             origen = "";
             destino = "";
-            dest_name = "";
             finalizado = true;
             pos_error = 0;
-            filepart = 0;
         }
 
         public void setOrigen (string Origen)
@@ -56,13 +51,9 @@ namespace FileUploader
             
             try
             {
-                dest_name = destino;
-                if (filepart > 0)
-                    dest_name = Path.GetFileNameWithoutExtension(destino) + filepart.ToString("000") + ".xml";
-
                 sr = new System.IO.StreamReader(origen, System.Text.Encoding.Default);
-                sw = new System.IO.StreamWriter(dest_name);
-                //sw.WriteLine("<? xml version = \"1.0\" encoding = \"UTF-16\" ?>");
+                sw = new System.IO.StreamWriter(destino);
+                sw.WriteLine("<?xml version = \"1.0\" encoding = \"UTF-8\" ?>");
                 sw.WriteLine("<ROOT>");
             }
             catch(Exception)
@@ -74,14 +65,6 @@ namespace FileUploader
 
         public void LimpiarFiles()
         {
-            string actual = destino;
-            int arcact = 0;
-            while (File.Exists(actual))
-            {
-                actual = Path.GetFileNameWithoutExtension(destino) + arcact.ToString("000") + ".xml";
-                File.Delete(actual);
-                arcact++;
-            }
             if (File.Exists(Path.ChangeExtension(destino, ".dat")))
             {
                 File.Delete(Path.ChangeExtension(destino, ".dat"));
@@ -195,18 +178,6 @@ namespace FileUploader
             return (sr.Peek() < 0);
         }
 
-            
-        public int DataArch(string arch)
-        {
-            string Origen = Path.ChangeExtension(arch, ".dat");
-            int resp = 0;
-            using (System.IO.StreamReader dr = new System.IO.StreamReader(Origen))
-            {
-                bool success = Int32.TryParse(dr.ReadLine(), out resp);
-            }
-            return resp;
-        }
-
         public void cambiar(string reemplazo)
         {
             actualizar=true;
@@ -265,28 +236,28 @@ namespace FileUploader
             switch (posicion)
             {
                 case 0:
-                    resp = "      <CEDULA> " + elemento + @" </CEDULA>";
+                    resp = "      <CEDULA>" + elemento + @"</CEDULA>";
                     break;
                 case 1:
-                    resp = "      <CODELEC> " + elemento + @" </CODELEC>";
+                    resp = "      <CODELEC>" + elemento + @"</CODELEC>";
                     break;
                 case 2:
-                    resp = "      <SEXO> " + elemento + @" </SEXO>";
+                    resp = "      <SEXO>" + elemento + @"</SEXO>";
                     break;
                 case 3:
-                    resp = "      <FECHACADUC> " + elemento + @" </FECHACADUC>";
+                    resp = "      <FECHACADUC>" + elemento + @"</FECHACADUC>";
                     break;
                 case 4:
-                    resp = "      <JUNTA> " + elemento + @" </JUNTA>";
+                    resp = "      <JUNTA>" + elemento + @"</JUNTA>";
                     break;
                 case 5:
-                    resp = "      <NOMBRE> " + elemento + @" </NOMBRE>";
+                    resp = "      <NOMBRE>" + elemento.TrimEnd() + @"</NOMBRE>";
                     break;
                 case 6:
-                    resp = "      <APELLIDO1> " + elemento + @" </APELLIDO1>";
+                    resp = "      <APELLIDOUNO>" + elemento.TrimEnd() + @"</APELLIDOUNO>";
                     break;
                 case 7:
-                    resp = "      <APELLIDO2> " + elemento + @" </APELLIDO2>";
+                    resp = "      <APELLIDODOS>" + elemento.TrimEnd() + @"</APELLIDODOS>";
                     break;
             }
             return resp;

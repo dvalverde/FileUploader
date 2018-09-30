@@ -37,25 +37,33 @@ namespace FileUploader
             return resp;
         }
 
-        public void setFile(string filepath, string namefile)
+        public void setFile(string filepath)
         {
             string ulr = "ftp://35.238.137.162/";
             filename = filepath;
-            ulrname = ulr + namefile+".xml";
+            ulrname = ulr + "datos.xml";
         }
 
-        public string DeleteFile()
+        public string DeleteFile(string ulr)
         {
             string resp = "";
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ulrname);
-            request.Credentials = new NetworkCredential(ftpUser, ftpPassword);
-            request.Method = WebRequestMethods.Ftp.DeleteFile;
-
-            using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
+            try
             {
-                resp = ($"Borrado finalizado, estado: {response.StatusDescription}");
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ulr);
+                request.Credentials = new NetworkCredential(ftpUser, ftpPassword);
+                request.Method = WebRequestMethods.Ftp.DeleteFile;
+
+                using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
+                {
+                    resp = ($"Borrado finalizado, estado: {response.StatusDescription}");
+                }
+                return resp;
             }
-            return resp;
+            catch (Exception ex)
+            {
+                resp = ($"Fallo borrado, estado: {ex.Message}");
+                return resp;
+            }
         }
     }
 }

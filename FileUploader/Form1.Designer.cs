@@ -49,6 +49,7 @@
             this.DestinoBTN = new System.Windows.Forms.Button();
             this.OrigenBTN = new System.Windows.Forms.Button();
             this.TaduccionPanel = new System.Windows.Forms.Panel();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.EliminarBTN = new System.Windows.Forms.Button();
             this.EstadoL = new System.Windows.Forms.Label();
             this.CorregirBTN = new System.Windows.Forms.Button();
@@ -61,7 +62,6 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.OPENFTP = new System.Windows.Forms.OpenFileDialog();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.Envio.SuspendLayout();
@@ -104,7 +104,6 @@
             // 
             // BorrarBTN
             // 
-            this.BorrarBTN.Enabled = false;
             this.BorrarBTN.Location = new System.Drawing.Point(28, 181);
             this.BorrarBTN.Name = "BorrarBTN";
             this.BorrarBTN.Size = new System.Drawing.Size(182, 23);
@@ -299,6 +298,17 @@
             this.TaduccionPanel.Size = new System.Drawing.Size(204, 219);
             this.TaduccionPanel.TabIndex = 3;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(25, 172);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(97, 17);
+            this.checkBox1.TabIndex = 9;
+            this.checkBox1.Text = "Eliminar errores";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // EliminarBTN
             // 
             this.EliminarBTN.Enabled = false;
@@ -397,17 +407,6 @@
             this.OPENFTP.DefaultExt = "xml";
             this.OPENFTP.Filter = "(.xml)|*.xml";
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(25, 172);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(97, 17);
-            this.checkBox1.TabIndex = 9;
-            this.checkBox1.Text = "Eliminar errores";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -464,8 +463,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label EstadoCorL;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button BorrarBTN;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button BorrarBTN;
     }
 }
 
