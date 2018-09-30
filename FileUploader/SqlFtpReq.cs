@@ -48,7 +48,8 @@ namespace FileUploader
             {    //watch out for this SQL injection vulnerability below
                 MySqlCommand cmd = conn.CreateCommand();
                 conn.Open();
-                cmd.CommandText = "DELETE from personas; LOAD XML LOCAL INFILE \"http://35.238.137.162/datos.xml\" INTO TABLE personas ROWS IDENTIFIED BY '<VOTANTE>'; ";
+                string ftpsitio = "http://35.238.137.162/datos.xml";
+                cmd.CommandText = "DELETE from personas; LOAD XML LOCAL INFILE \"" +ftpsitio+"\" INTO TABLE personas ROWS IDENTIFIED BY '<VOTANTE>'; ";
                 cmd.CommandType = CommandType.Text;
 
                 try

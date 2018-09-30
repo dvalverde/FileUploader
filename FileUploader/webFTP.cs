@@ -12,6 +12,7 @@ namespace FileUploader
         private string ftpUser;
         public string filename;
         public string ulrname; //"ftp://ftp.example.com/remote/path/file.zip"
+        private int avance;
 
         public webFTP(string FtpPassword, string FtpUser)
         {
@@ -24,15 +25,22 @@ namespace FileUploader
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ulrname);
             request.Credentials = new NetworkCredential(ftpUser, ftpPassword);
             request.Method = WebRequestMethods.Ftp.UploadFile;
+            try
+            {
+                using (Stream fileStream = File.OpenRead(filename))
+                using (Stream ftpStream = request.GetRequestStream())
+                {
 
-            using (Stream fileStream = File.OpenRead(filename))
-            using (Stream ftpStream = request.GetRequestStream())
-            {
-                fileStream.CopyTo(ftpStream);
+                    fileStream.CopyTo(ftpStream);
+                }
+                using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
+                {
+                    resp = ($"Carga finalizada, estado: {response.StatusDescription}");
+                }
             }
-            using (FtpWebResponse response = (FtpWebResponse)request.GetResponse())
+            catch (Exception ex)
             {
-                resp = ($"Carga finalizada, estado: {response.StatusDescription}");
+                resp = ($"Excepcion durante la carga: {ex.Message}");
             }
             return resp;
         }
