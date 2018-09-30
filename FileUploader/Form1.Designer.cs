@@ -30,6 +30,7 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.BorrarBTN = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.listBoxServer = new System.Windows.Forms.ListBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -60,7 +61,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.OPENFTP = new System.Windows.Forms.OpenFileDialog();
-            this.BorrarBTN = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.Envio.SuspendLayout();
@@ -100,6 +101,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(236, 219);
             this.panel1.TabIndex = 4;
+            // 
+            // BorrarBTN
+            // 
+            this.BorrarBTN.Enabled = false;
+            this.BorrarBTN.Location = new System.Drawing.Point(28, 181);
+            this.BorrarBTN.Name = "BorrarBTN";
+            this.BorrarBTN.Size = new System.Drawing.Size(182, 23);
+            this.BorrarBTN.TabIndex = 13;
+            this.BorrarBTN.Text = "Borrar Archivo";
+            this.BorrarBTN.UseVisualStyleBackColor = true;
+            this.BorrarBTN.Click += new System.EventHandler(this.BorrarBTN_Click);
             // 
             // label6
             // 
@@ -272,6 +284,7 @@
             // 
             // TaduccionPanel
             // 
+            this.TaduccionPanel.Controls.Add(this.checkBox1);
             this.TaduccionPanel.Controls.Add(this.EliminarBTN);
             this.TaduccionPanel.Controls.Add(this.EstadoL);
             this.TaduccionPanel.Controls.Add(this.CorregirBTN);
@@ -384,16 +397,16 @@
             this.OPENFTP.DefaultExt = "xml";
             this.OPENFTP.Filter = "(.xml)|*.xml";
             // 
-            // BorrarBTN
+            // checkBox1
             // 
-            this.BorrarBTN.Enabled = false;
-            this.BorrarBTN.Location = new System.Drawing.Point(28, 181);
-            this.BorrarBTN.Name = "BorrarBTN";
-            this.BorrarBTN.Size = new System.Drawing.Size(182, 23);
-            this.BorrarBTN.TabIndex = 13;
-            this.BorrarBTN.Text = "Borrar Archivo";
-            this.BorrarBTN.UseVisualStyleBackColor = true;
-            this.BorrarBTN.Click += new System.EventHandler(this.BorrarBTN_Click);
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(25, 172);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(97, 17);
+            this.checkBox1.TabIndex = 9;
+            this.checkBox1.Text = "Eliminar errores";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // Form1
             // 
@@ -452,6 +465,7 @@
         private System.Windows.Forms.Label EstadoCorL;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button BorrarBTN;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 

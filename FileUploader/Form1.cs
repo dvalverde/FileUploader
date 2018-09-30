@@ -17,11 +17,13 @@ namespace FileUploader
         private Txt2Xml Traductor;
         private SqlFtpReq Consultor;
         private webFTP FTPUploader;
+        public bool saltar;
         private bool orig;
         private bool dest;
         private bool selServ;
         private bool selUlr;
         private int serverInd;
+        private int partes;
         public Form1()
         {
             InitializeComponent();
@@ -33,6 +35,7 @@ namespace FileUploader
             Consultor= new SqlFtpReq();
             Traductor = new Txt2Xml();
             FTPUploader = new webFTP("61|Itt<^UwI$M+E", "bases2p1");
+            saltar = checkBox1.Checked; 
         }
 
         private void traduccion() {
@@ -86,6 +89,8 @@ namespace FileUploader
         private void TraducirBTN_Click(object sender, EventArgs e)
         {
             TraducirBTN.Enabled = false;
+            Traductor.filepart=0;
+            Traductor.LimpiarFiles();
             Traductor.encabezado();
             traduccion();
         }
@@ -150,9 +155,21 @@ namespace FileUploader
         }
         private void EnviarBTN_Click(object sender, EventArgs e)
         {
-            string Mensage=FTPUploader.send();
-            MessageBox.Show(Mensage);
-            UlrTB.Text = FTPUploader.ulrname;
+            string file = SeleccionTB.Text;
+            FTPUploader.setFile(file, Path.GetFileNameWithoutExtension(file));
+            string ulrOrig= FTPUploader.ulrname;
+            string actual = file;
+            string Mensage;
+            int arcact = 0;
+            while (File.Exists(actual))
+            {
+                actual = Path.GetFileNameWithoutExtension(file) + arcact.ToString("000") + ".xml";
+                FTPUploader.setFile(actual, Path.GetFileNameWithoutExtension(actual));
+                Mensage = FTPUploader.send();
+                MessageBox.Show(Mensage);
+                arcact++;
+            }
+            UlrTB.Text = ulrOrig;
         }
 
         private void CargarBTN_Click(object sender, EventArgs e)
@@ -189,15 +206,28 @@ namespace FileUploader
 
         private void ErrorTB_TextChanged(object sender, EventArgs e)
         {
-            if (ErrorTB.Text != Traductor.correccion)
-                CorregirBTN.Enabled = true;
+            if (saltar)
+            {
+                Traductor.saltar();
+                EstadoCorL.Text = "Tupla Ignorada";
+                ErrorTB.Text = "";
+                ElementoL.Text = "";
+                CorregirBTN.Enabled = false;
+                EliminarBTN.Enabled = false;
+                if(!Traductor.finalizado)
+                    traduccion();
+            }
+            else
+            {
+                if (ErrorTB.Text != Traductor.correccion)
+                    CorregirBTN.Enabled = true;
+            }
         }
 
         private void SeleccionTB_TextChanged(object sender, EventArgs e)
         {
-            string file = SeleccionTB.Text;
-            FTPUploader.setFile(file, Path.GetFileNameWithoutExtension(file));
             EnviarBTN.Enabled = true;
+            partes=Traductor.DataArch(SeleccionTB.Text);
         }
 
 
@@ -245,8 +275,15 @@ namespace FileUploader
 
         private void BorrarBTN_Click(object sender, EventArgs e)
         {
+            string file = SeleccionTB.Text;
+            FTPUploader.setFile(file, Path.GetFileNameWithoutExtension(file));
             string Mensage = FTPUploader.DeleteFile();
             MessageBox.Show(Mensage);
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            saltar = checkBox1.Checked;
         }
     }
 }
