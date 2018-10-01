@@ -158,7 +158,6 @@ namespace FileUploader
             FTPUploader.setFile(file);
             string ulrOrig = FTPUploader.ulrname;
             string Mensage= FTPUploader.send();
-            //string Mensage = FTPUploader.DeleteFile("ftp://35.238.137.162/datos%20-%20Copy.xml");
             MessageBox.Show(Mensage);
             UlrTB.Text = ulrOrig;
         }
@@ -172,7 +171,7 @@ namespace FileUploader
             if (Consultor.Errores)
                 MessageBox.Show("Ocurrieron Excepciones durante la carga","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
             else
-                MessageBox.Show("Se insertaron "+ Consultor.inserciones+" filas");
+                MessageBox.Show("Se modificaron "+ Consultor.inserciones+" filas");
         }
 
         private void OrigenTB_TextChanged(object sender, EventArgs e)

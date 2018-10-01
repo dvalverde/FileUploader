@@ -175,7 +175,13 @@ namespace FileUploader
 
         public bool leido()
         {
-            return (sr.Peek() < 0);
+            try
+            {
+                return (sr.Peek() < 0);
+            }
+            catch (Exception){
+                return false;
+            }
         }
 
         public void cambiar(string reemplazo)

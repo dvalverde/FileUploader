@@ -11,6 +11,7 @@ namespace FileUploader
     {
         private string mysql;
         private string mssql;
+        //private string querymysql;
         public bool Errores;
         public int inserciones;
         public SqlFtpReq()
@@ -19,15 +20,21 @@ namespace FileUploader
             mysql = "Server = 35.225.47.96; Database = bases2p1; Uid = root; Pwd = bases123*;";
             Errores = false;
             inserciones = 0;
+            //querymysql = getquery();
         }
+        /*private string getquery() {
+            string resp = "";
+            using (System.IO.StreamReader sr = new System.IO.StreamReader("QuerryString.txt", System.Text.Encoding.Default)) {
+                resp = sr.ReadLine();
+            }
+            return resp;
+        }*/
+
         public void sendFtpMSDownload(string file)
         {
             using (SqlConnection cn = new SqlConnection(mssql))
             {
                 cn.Open();
-
-                //SqlCommand cmd = new SqlCommand("USE [bases2p1] GO DECLARE @return_value int EXEC @return_value = [dbo].[insertar] SELECT  'Return Value' = @return_value GO" ,cn);
-                //cmd.CommandType = CommandType.Text;
                 SqlCommand cmd = new SqlCommand("[bases2p1].[dbo].[insertar]", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
@@ -48,8 +55,7 @@ namespace FileUploader
             {    //watch out for this SQL injection vulnerability below
                 MySqlCommand cmd = conn.CreateCommand();
                 conn.Open();
-                string ftpsitio = "http://35.238.137.162/datos.xml";
-                cmd.CommandText = "DELETE from personas; LOAD XML LOCAL INFILE \"" +ftpsitio+"\" INTO TABLE personas ROWS IDENTIFIED BY '<VOTANTE>'; ";
+                cmd.CommandText = "LOAD XML INFILE 'http://35.238.137.162/datos.xml' INTO TABLE personas ROWS IDENTIFIED BY '<VOTANTE>';" ;
                 cmd.CommandType = CommandType.Text;
 
                 try
