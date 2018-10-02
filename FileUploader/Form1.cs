@@ -76,6 +76,8 @@ namespace FileUploader
                 EliminarBTN.Enabled = true;
                 ElementoL.Text = resp;
                 ErrorTB.Text = Traductor.correccion;
+                if (Traductor.correccion == "")
+                    ErrorTB.Text = "E_Campo_Vacio";
             }
             else
             {
@@ -88,6 +90,7 @@ namespace FileUploader
         private void TraducirBTN_Click(object sender, EventArgs e)
         {
             TraducirBTN.Enabled = false;
+            EstadoCorL.Text = "Corrigiendo";
             Traductor.LimpiarFiles();
             Traductor.encabezado();
             traduccion();
@@ -96,11 +99,11 @@ namespace FileUploader
         private void CorregirBTN_Click(object sender, EventArgs e)
         {
             EstadoCorL.Text = "Corrigiendo";
-            Traductor.cambiar(ErrorTB.Text);
             ErrorTB.Text = "";
             ElementoL.Text = "";
             CorregirBTN.Enabled = false;
             EliminarBTN.Enabled = false;
+            Traductor.cambiar(ErrorTB.Text);
             traduccion();
         }
 
@@ -164,12 +167,13 @@ namespace FileUploader
 
         private void CargarBTN_Click(object sender, EventArgs e)
         {
-            if (serverInd == 0)
+            string a= Consultor.sendFtpMSDownload(UlrTB.Text);
+            /*if (serverInd == 0)
                 Consultor.sendFtpMSDownload(UlrTB.Text);
             else
-                Consultor.sendFtpMyDownload(UlrTB.Text);
+                Consultor.sendFtpMyDownload(UlrTB.Text);*/
             if (Consultor.Errores)
-                MessageBox.Show("Ocurrieron Excepciones durante la carga","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show("Ocurrieron Excepciones durante la carga"+a,"Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
             else
                 MessageBox.Show("Se modificaron "+ Consultor.inserciones+" filas");
         }

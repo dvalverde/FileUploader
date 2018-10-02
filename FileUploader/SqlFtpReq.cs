@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using MySql.Data.MySqlClient;
+//using MySql.Data.MySqlClient;
 
 
 
@@ -16,7 +16,7 @@ namespace FileUploader
         public int inserciones;
         public SqlFtpReq()
         {
-            mssql = "Data Source=35.238.137.162;" + "Initial Catalog=bases2p1;" + "User id=sa;" + "Password=bases123*;";
+            mssql = "Data Source=35.238.137.162;" + "Initial Catalog=bases2p1;" + "User id=sa;" + "Password=bases123*;"+ "Connection Timeout = 1200;";
             mysql = "Server = 35.225.47.96; Database = bases2p1; Uid = root; Pwd = bases123*;";
             Errores = false;
             inserciones = 0;
@@ -30,25 +30,29 @@ namespace FileUploader
             return resp;
         }*/
 
-        public void sendFtpMSDownload(string file)
+        public string sendFtpMSDownload(string file)
         {
+            string resp = "Exito";
             using (SqlConnection cn = new SqlConnection(mssql))
             {
                 cn.Open();
                 SqlCommand cmd = new SqlCommand("[bases2p1].[dbo].[insertar]", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
-
+                
                 try
                 {
                     inserciones = cmd.ExecuteNonQuery();
                     Errores = false;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     Errores = true;
+                    resp = ex.Message;
                 }
             }
+            return resp;
         }
+        /*
         public void sendFtpMyDownload(string url)
         {
             using (MySqlConnection conn = new MySqlConnection(mysql))
@@ -68,7 +72,7 @@ namespace FileUploader
                     Errores = true;
                 }
             }
-        }
+        }*/
 
         public bool IsServerConnected(int server)
         {
@@ -90,7 +94,8 @@ namespace FileUploader
                     }
                 }
             }
-            else
+            return false;
+            /*else
             {
                 using (MySqlConnection conn = new MySqlConnection(mysql))
                 {
@@ -107,7 +112,7 @@ namespace FileUploader
                         return false;
                     }
                 }
-            }
+            }*/
         }
     }
 }

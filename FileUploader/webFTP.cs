@@ -24,6 +24,7 @@ namespace FileUploader
             string resp = "";
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ulrname);
             request.Credentials = new NetworkCredential(ftpUser, ftpPassword);
+            request.Timeout = 3600;
             request.Method = WebRequestMethods.Ftp.UploadFile;
             try
             {

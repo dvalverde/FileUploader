@@ -140,6 +140,8 @@ namespace FileUploader
                 }
                 string s = new string(Sbuffer);
                 line = Regex.Replace(s, @"\n", "");
+                if (line == "")
+                    return true;
             }
             string[] linea = line.Split(',');
             if (actualizar)
@@ -209,21 +211,25 @@ namespace FileUploader
             correccion = elementos[pos_error];
             if (!(correccion.Length == 1 && esNumero(correccion)))
                 return false;
+            pos_error = 3;
+            correccion = elementos[pos_error];
+            if (!(correccion.Length == 8 && esNumero(correccion)))
+                return false;
             pos_error = 4;
             correccion = elementos[pos_error];
             if (!(correccion.Length == 5 && esNumero(correccion)))
                 return false;
             pos_error = 5;
             correccion = elementos[pos_error];
-            if (!esAlfabetico(correccion))
+            if (!(esAlfabetico(correccion)))
                 return false;
             pos_error = 6;
             correccion = elementos[pos_error];
-            if (!esAlfabetico(correccion))
+            if (!(esAlfabetico(correccion)))
                 return false;
             pos_error = 7;
             correccion = elementos[pos_error];
-            if (!esAlfabetico(correccion))
+            if (!(esAlfabetico(correccion)))
                 return false;
             return true;
         }
@@ -274,7 +280,7 @@ namespace FileUploader
         }
         private bool esAlfabetico(string s)
         {
-            return Regex.IsMatch(s, @"^[´'áéíóúÁÉÍÓÚÜüñÑa-zA-Z\s]+$");
+            return Regex.IsMatch(s, @"^[-.´'áéíóúÁÉÍÓÚÜüñÑa-zA-Z\s]+$");
         }
     }
 }
