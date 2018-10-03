@@ -280,8 +280,8 @@ namespace FileUploader
         }
         private bool esAlfabetico(string s)
         {
-            //return Regex.IsMatch(s, @"^[-.´'áéíóúÁÉÍÓÚÜüñÑa-zA-Z\s]+$");
-            return Regex.IsMatch(s, @"^[-.´'\w\s]+$");
+            return Regex.IsMatch(s, @"^[-.´'áéíóúÁÉÍÓÚÜüñÑa-zA-Z\s]+$");
+            //return Regex.IsMatch(s, @"^[-.´'\w\s]+$");
         }
     }
 }
